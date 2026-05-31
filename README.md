@@ -2,6 +2,10 @@
 
 SmartCRM is a customer relationship management system powered by AI. It helps businesses manage customers and automate tasks using artificial intelligence. The system can read product documents to answer customer questions and perform actions like creating leads or sending emails automatically.
 
+## System Architecture
+
+![SmartCRM Architecture](./SystemArchitecture.svg)
+
 ## Key Features
 
 - AI Chat: Users can ask questions about products. The AI reads uploaded documents to provide accurate answers.

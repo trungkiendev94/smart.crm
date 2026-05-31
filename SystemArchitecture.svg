@@ -1,0 +1,86 @@
+<svg width="1000" height="850" viewBox="0 0 1000 850" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1000" height="850" fill="#fcfcfc" />
+  
+  <!-- Title -->
+  <text x="500" y="45" font-family="Segoe UI, Arial, sans-serif" font-size="26" font-weight="bold" text-anchor="middle" fill="#2c3e50">SmartCRM AI-Agent Architecture</text>
+
+  <!-- Section Headers -->
+  <text x="40" y="100" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="bold" fill="#7f8c8d" letter-spacing="1">USER INTERFACE LAYER</text>
+  <text x="40" y="300" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="bold" fill="#7f8c8d" letter-spacing="1">APPLICATION &amp; AI INTELLIGENCE</text>
+  <text x="40" y="600" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="bold" fill="#7f8c8d" letter-spacing="1">DATA &amp; INFRASTRUCTURE LAYER</text>
+
+  <!-- Client Layer (Frontend) -->
+  <rect x="325" y="120" width="350" height="90" rx="12" fill="#3498db" stroke="#2980b9" stroke-width="2" />
+  <text x="500" y="155" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="white">Vue.js Frontend</text>
+  <text x="500" y="180" font-family="Segoe UI, Arial, sans-serif" font-size="13" text-anchor="middle" fill="#ecf0f1">UI, Smart Chat &amp; Lead Management</text>
+
+  <!-- Backend Web API -->
+  <rect x="325" y="330" width="350" height="150" rx="12" fill="#2ecc71" stroke="#27ae60" stroke-width="2" />
+  <text x="500" y="365" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="white">.NET 10 Web API</text>
+  <text x="500" y="390" font-family="Segoe UI, Arial, sans-serif" font-size="13" text-anchor="middle" fill="#f1f8f1">Workflow Orchestration &amp; Security</text>
+  
+  <!-- Semantic Kernel (Inside Web API) -->
+  <rect x="350" y="415" width="300" height="45" rx="8" fill="#ffffff" fill-opacity="0.15" stroke="white" stroke-dasharray="5,3" />
+  <text x="500" y="443" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Semantic Kernel SDK (Orchestrator)</text>
+
+  <!-- AI Models Service -->
+  <rect x="740" y="330" width="220" height="150" rx="12" fill="#9b59b6" stroke="#8e44ad" stroke-width="2" />
+  <text x="850" y="365" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="white">AI Models</text>
+  <line x1="760" y1="385" x2="940" y2="385" stroke="white" stroke-opacity="0.3" />
+  <text x="850" y="410" font-family="Segoe UI, Arial, sans-serif" font-size="13" text-anchor="middle" fill="white">Ollama (Local Llama 3)</text>
+  <text x="850" y="440" font-family="Segoe UI, Arial, sans-serif" font-size="13" text-anchor="middle" fill="white">OpenAI GPT-4o API</text>
+
+  <!-- PostgreSQL (Database) -->
+  <rect x="80" y="630" width="260" height="130" rx="12" fill="#1abc9c" stroke="#16a085" stroke-width="2" />
+  <text x="210" y="665" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="white">PostgreSQL</text>
+  <text x="210" y="695" font-family="Segoe UI, Arial, sans-serif" font-size="13" text-anchor="middle" fill="white">Structured Data &amp; pgvector</text>
+  <text x="210" y="725" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-style="italic" text-anchor="middle" fill="white">Vector Knowledge Base (RAG)</text>
+
+  <!-- RabbitMQ (Messaging) -->
+  <rect x="420" y="630" width="160" height="130" rx="12" fill="#e67e22" stroke="#d35400" stroke-width="2" />
+  <text x="500" y="665" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="white">RabbitMQ</text>
+  <text x="500" y="700" font-family="Segoe UI, Arial, sans-serif" font-size="13" text-anchor="middle" fill="white">Message Broker</text>
+  <text x="500" y="730" font-family="Segoe UI, Arial, sans-serif" font-size="13" text-anchor="middle" fill="white">(Async Pipelines)</text>
+
+  <!-- Lead Service (Worker) -->
+  <rect x="660" y="630" width="260" height="130" rx="12" fill="#2ecc71" stroke="#27ae60" stroke-width="2" />
+  <text x="790" y="665" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="white">Lead Service</text>
+  <text x="790" y="700" font-family="Segoe UI, Arial, sans-serif" font-size="13" text-anchor="middle" fill="white">Background Worker</text>
+  <text x="790" y="730" font-family="Segoe UI, Arial, sans-serif" font-size="13" text-anchor="middle" fill="white">Processing Agent Tasks</text>
+
+  <!-- Connecting Arrows and Labels -->
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,10 L9,5 z" fill="#34495e" />
+    </marker>
+  </defs>
+
+  <!-- Frontend to API -->
+  <path d="M500 210 L500 330" stroke="#34495e" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+  <rect x="440" y="255" width="120" height="25" rx="4" fill="white" stroke="#bdc3c7" stroke-width="1" />
+  <text x="500" y="272" font-family="Segoe UI, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#2c3e50">REST API / JSON</text>
+  
+  <!-- API to AI Models -->
+  <path d="M675 405 L740 405" stroke="#34495e" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+  
+  <!-- API to DB (Vector Search) -->
+  <path d="M360 480 L230 630" stroke="#34495e" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+  <rect x="190" y="535" width="140" height="25" rx="4" fill="white" stroke="#bdc3c7" stroke-width="1" />
+  <text x="260" y="552" font-family="Segoe UI, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#2c3e50" font-weight="bold">1. Vector Search</text>
+
+  <!-- API to RabbitMQ (Task Distribution) -->
+  <path d="M500 480 L500 630" stroke="#34495e" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+  <rect x="430" y="535" width="140" height="25" rx="4" fill="white" stroke="#bdc3c7" stroke-width="1" />
+  <text x="500" y="552" font-family="Segoe UI, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#2c3e50" font-weight="bold">2. Trigger Agent Task</text>
+
+  <!-- RabbitMQ to Lead Service -->
+  <path d="M580 695 L660 695" stroke="#34495e" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+  <text x="620" y="688" font-family="Segoe UI, Arial, sans-serif" font-size="11" text-anchor="middle" fill="#34495e">Consume</text>
+
+  <!-- Lead Service to Database (Persistence) -->
+  <path d="M790 760 L790 810 L210 810 L210 760" stroke="#34495e" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+  <rect x="430" y="797" width="140" height="25" rx="4" fill="white" stroke="#bdc3c7" stroke-width="1" />
+  <text x="500" y="814" font-family="Segoe UI, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#2c3e50" font-weight="bold">3. Save CRM Data</text>
+
+</svg>
