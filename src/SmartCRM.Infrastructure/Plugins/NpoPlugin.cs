@@ -18,7 +18,7 @@ public class NpoPlugin
         _context = context;
     }
 
-    [KernelFunction, Description("Lấy danh sách các chiến dịch gây quỹ (Campaigns) đang hoạt động.")]
+    [KernelFunction, Description("Get list of active fundraising campaigns.")]
     public async Task<string> GetActiveCampaignsAsync()
     {
         var campaigns = await _context.Campaigns
@@ -26,17 +26,17 @@ public class NpoPlugin
             .Select(c => new { c.Name, c.Description, c.CurrentAmount, c.TargetAmount })
             .ToListAsync();
 
-        if (!campaigns.Any()) return "Hiện không có chiến dịch gây quỹ nào đang hoạt động.";
+        if (!campaigns.Any()) return "There are currently no active fundraising campaigns.";
 
-        return "Danh sách chiến dịch:\n" + string.Join("\n", campaigns.Select(c => $"- {c.Name}: {c.Description} (Đã huy động: {c.CurrentAmount}/{c.TargetAmount})"));
+        return "List of campaigns:\n" + string.Join("\n", campaigns.Select(c => $"- {c.Name}: {c.Description} (Raised: {c.CurrentAmount}/{c.TargetAmount})"));
     }
 
-    [KernelFunction, Description("Đăng ký một nhà tài trợ (Donor) mới.")]
+    [KernelFunction, Description("Register a new donor.")]
     public async Task<string> RegisterDonorAsync(
-        [Description("Tên đầy đủ của nhà tài trợ")] string fullName,
-        [Description("Email nhà tài trợ")] string email,
-        [Description("Số điện thoại")] string? phone = null,
-        [Description("Loại nhà tài trợ (Individual hoặc Corporate)")] string donorType = "Individual")
+        [Description("Full name of the donor")] string fullName,
+        [Description("Donor email")] string email,
+        [Description("Phone number")] string? phone = null,
+        [Description("Donor type (Individual or Corporate)")] string donorType = "Individual")
     {
         var donor = new Donor
         {
@@ -50,21 +50,21 @@ public class NpoPlugin
         _context.Donors.Add(donor);
         await _context.SaveChangesAsync();
 
-        return $"Đã đăng ký nhà tài trợ {fullName} thành công.";
+        return $"Registered donor {fullName} successfully.";
     }
 
-    [KernelFunction, Description("Ghi nhận một khoản đóng góp (Donation) từ nhà tài trợ cho một chiến dịch.")]
+    [KernelFunction, Description("Record a donation from a donor to a campaign.")]
     public async Task<string> RecordDonationAsync(
-        [Description("Email của nhà tài trợ")] string donorEmail,
-        [Description("Tên chiến dịch gây quỹ")] string campaignName,
-        [Description("Số tiền đóng góp")] decimal amount,
-        [Description("Phương thức thanh toán")] string paymentMethod)
+        [Description("Email of the donor")] string donorEmail,
+        [Description("Name of the fundraising campaign")] string campaignName,
+        [Description("Donation amount")] decimal amount,
+        [Description("Payment method")] string paymentMethod)
     {
         var donor = await _context.Donors.FirstOrDefaultAsync(d => d.Email == donorEmail);
-        if (donor == null) return "Không tìm thấy nhà tài trợ với email này.";
+        if (donor == null) return "No donor found with this email.";
 
         var campaign = await _context.Campaigns.FirstOrDefaultAsync(c => c.Name.Contains(campaignName));
-        if (campaign == null) return "Không tìm thấy chiến dịch gây quỹ này.";
+        if (campaign == null) return "No fundraising campaign found with this name.";
 
         var donation = new Donation
         {
@@ -83,6 +83,6 @@ public class NpoPlugin
 
         await _context.SaveChangesAsync();
 
-        return $"Đã ghi nhận khoản đóng góp {amount} từ {donor.FullName} cho chiến dịch {campaign.Name}.";
+        return $"Recorded donation of {amount} from {donor.FullName} for campaign {campaign.Name}.";
     }
 }

@@ -41,9 +41,9 @@ public class GuardrailFilter : IFunctionInvocationFilter
         if (context.Result?.ValueType == typeof(string))
         {
             var resultStr = context.Result.GetValue<string>();
-            if (resultStr != null && resultStr.Contains("MẬT KHẨU", StringComparison.OrdinalIgnoreCase))
+            if (resultStr != null && resultStr.Contains("PASSWORD", StringComparison.OrdinalIgnoreCase))
             {
-                context.Result = new FunctionResult(context.Function, "Thông tin nhạy cảm đã bị ẩn.");
+                context.Result = new FunctionResult(context.Function, "Sensitive information has been hidden.");
             }
         }
     }

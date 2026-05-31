@@ -70,7 +70,7 @@ using (var scope = app.Services.CreateScope())
             context.SystemSettings.Add(new SystemSetting
             {
                 Key = "AgentInstructions",
-                Value = "# SMARTCRM AI ASSISTANT INSTRUCTION\n\n## ROLE\nYou are a professional CRM Consultant. You provide accurate info and help manage leads.\n\n## LANGUAGE RULE\n- **MATCH USER LANGUAGE**: Always respond in the same language as the user. If the user asks in Vietnamese, respond in Vietnamese.\n\n## RULES\n1. ALWAYS use the information provided in 'RECORDS FOUND' context to answer questions.\n2. Be friendly and use emojis (✨, 🚀, 😊).\n3. If you need to create a lead, call the 'CreateLead' tool.\n4. If information is missing in records, admit it politely."
+                Value = "# SMARTCRM AI ASSISTANT INSTRUCTION\n\n## ROLE\nYou are a professional CRM Consultant. You provide accurate info and help manage leads.\n\n## LANGUAGE RULE\n- **ENGLISH ONLY**: Always respond in English. If the user asks in another language, respond in English politely."
             });
             await context.SaveChangesAsync();
         }

@@ -1,19 +1,19 @@
-# DANH MỤC SẢN PHẨM SMARTCRM 2026
+# SMARTCRM PRODUCT CATALOG 2026
 
-## 1. SmartCRM Basic
-- Giá: 500,000 VNĐ/tháng.
-- Tính năng: Quản lý tối đa 1,000 khách hàng, lưu trữ tài liệu cơ bản, báo cáo doanh thu đơn giản.
-- Phù hợp: Cá nhân kinh doanh, Startup nhỏ.
+## Basic Plan
+- Price: 500,000 VND/month.
+- Features: Manage up to 1,000 customers, basic document storage, simple revenue reports.
+- Suitable for: Individual sellers, small startups.
 
-## 2. SmartCRM Pro
-- Giá: 2,000,000 VNĐ/tháng.
-- Tính năng: Quản lý không giới hạn khách hàng, tích hợp AI Assistant cơ bản, tự động hóa Email Marketing, báo cáo chuyên sâu.
-- Phù hợp: Doanh nghiệp vừa và nhỏ (SME).
+## Professional Plan
+- Price: 2,000,000 VND/month.
+- Features: Unlimited customer management, basic AI Assistant integration, automated Email Marketing, advanced reporting.
+- Suitable for: Small and Medium Enterprises (SME).
 
-## 3. SmartCRM Enterprise
-- Giá: Liên hệ (Khoảng 10,000,000 VNĐ/tháng).
-- Tính năng: Tích hợp AI Agent toàn diện (RAG + Agentic Workflows), kết nối đa kênh (Omnichannel), bảo mật 3 lớp, hỗ trợ 24/7.
-- Phù hợp: Tập đoàn, doanh nghiệp lớn.
+## Enterprise Plan
+- Price: Contact (Approx. 10,000,000 VND/month).
+- Features: Full AI Agent integration (RAG + Agentic Workflows), multi-channel connection (Omnichannel), 3-layer security, 24/7 support.
+- Suitable for: Corporations, large enterprises.
 
-## Chính sách dùng thử
-- Miễn phí 14 ngày cho tất cả các gói. Không cần thẻ tín dụng.
+## Trial Policy
+- Free 14 days for all plans. No credit card required.

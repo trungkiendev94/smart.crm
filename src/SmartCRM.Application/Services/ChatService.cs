@@ -46,7 +46,7 @@ Schema: { ""reply"": ""your_response_here"" }";
 
     private string ParseJsonResponse(string? content)
     {
-        if (string.IsNullOrEmpty(content)) return "Tôi đã xử lý yêu cầu thành công! ✨";
+        if (string.IsNullOrEmpty(content)) return "I have successfully processed your request! ✨";
 
         try 
         {
@@ -56,7 +56,7 @@ Schema: { ""reply"": ""your_response_here"" }";
                 using var doc = JsonDocument.Parse(match.Value);
                 if (doc.RootElement.TryGetProperty("reply", out var replyElement))
                 {
-                    return replyElement.GetString() ?? "Tôi đã ghi nhận thông tin. 😊";
+                    return replyElement.GetString() ?? "I have recorded the information. 😊";
                 }
             }
         }
@@ -80,7 +80,7 @@ Schema: { ""reply"": ""your_response_here"" }";
         catch (Exception ex)
         {
             Console.WriteLine($"[ChatService] Global Error: {ex.Message}");
-            return new ChatResponse("Hệ thống gặp sự cố kết nối. Bạn thử lại sau nhé! 🛠️", new System.Collections.Generic.List<string>());
+            return new ChatResponse("The system is experiencing connection issues. Please try again later! 🛠️", new System.Collections.Generic.List<string>());
         }
     }
 
