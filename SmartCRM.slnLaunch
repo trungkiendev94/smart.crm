@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "src\\SmartCRM.WebAPI\\SmartCRM.WebAPI.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "src\\SmartCRM.LeadService\\SmartCRM.LeadService.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

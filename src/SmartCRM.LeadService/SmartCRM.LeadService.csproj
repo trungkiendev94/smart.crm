@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-SmartCRM.LeadService-8c3631fb-f725-482d-bea9-51883d62d4f0</UserSecretsId>
+      <NoWarn>$(NoWarn);SKEXP0001;NU1904</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.2.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SmartCRM.Infrastructure\SmartCRM.Infrastructure.csproj" />
+    <ProjectReference Include="..\SmartCRM.Shared\SmartCRM.Shared.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,22 @@
+# .NET
+[Bb]in/
+[Oo]bj/
+*.user
+*.userosscache
+*.sln.docuser
+.vs/
+
+# Node.js
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+
+# Docker
+.dockerignore
+
+# Misc
+.DS_Store
+Thumbs.db
+*.log

@@ -1,0 +1,6 @@
+@SmartCRM.WebAPI_HostAddress = http://localhost:5001
+
+GET {{SmartCRM.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
