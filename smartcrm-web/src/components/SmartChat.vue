@@ -14,7 +14,7 @@
           <!-- Show tools executed for this assistant message -->
           <div v-if="msg.tools?.length" class="tool-tags">
             <span v-for="tool in msg.tools" :key="tool" class="tool-tag">
-              ⚙️ Executed: {{ tool }}
+              Executed: {{ tool }}
             </span>
           </div>
         </div>
@@ -49,7 +49,7 @@ import { chatApi } from '../api';
 
 const userInput = ref('');
 const messages = ref<{ role: 'user' | 'assistant', text: string, tools?: string[] }[]>([
-  { role: 'assistant', text: 'Hello! I am your SmartCRM Agent. How can I help you today? 👋' }
+  { role: 'assistant', text: 'Hello! I am your SmartCRM Agent. How can I help you today?' }
 ]);
 const loading = ref(false);
 const currentStatus = ref('AI is thinking...');
@@ -87,7 +87,7 @@ const handleSend = async () => {
   } catch (error: any) {
     messages.value.push({ 
       role: 'assistant', 
-      text: 'Error: Connection lost. Is WebAPI running? 🛠️' 
+      text: 'Error: Connection lost. Is WebAPI running?' 
     });
   } finally {
     loading.value = false;

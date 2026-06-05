@@ -16,6 +16,7 @@ public class SmartCrmDbContext : DbContext
     public DbSet<Campaign> Campaigns { get; set; }
     public DbSet<Donation> Donations { get; set; }
     public DbSet<KnowledgeBase> KnowledgeBases { get; set; }
+    public DbSet<SentEmail> SentEmails { get; set; }
     public DbSet<SystemSetting> SystemSettings { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -28,7 +29,7 @@ public class SmartCrmDbContext : DbContext
         modelBuilder.Entity<KnowledgeBase>(entity =>
         {
             entity.Property(e => e.Embedding)
-                .HasColumnType("vector(3072)"); // Updated for Gemini embedding size (3072)
+                .HasColumnType("vector(384)"); // Updated for Ollama all-minilm (384)
         });
     }
 

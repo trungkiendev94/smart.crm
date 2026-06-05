@@ -35,4 +35,8 @@ export const dbApi = {
     }),
 };
 
+export const emailsApi = {
+  getHistory: () => api.get('/emails')
+};
+
 export default api;

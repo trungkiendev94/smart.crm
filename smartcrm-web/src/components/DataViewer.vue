@@ -16,7 +16,7 @@
             :class="{ active: selectedTable === table }"
             @click="selectTable(table)"
           >
-            📊 {{ table }}
+            {{ table }}
           </li>
         </ul>
       </aside>
@@ -34,7 +34,7 @@
               placeholder="Search in selected column..." 
               @keyup.enter="fetchData"
             />
-            <button @click="fetchData" class="icon-btn">🔍</button>
+            <button @click="fetchData" class="icon-btn">Search</button>
           </div>
           <div class="pagination-info">
             Total: {{ totalCount }} records
@@ -65,7 +65,7 @@
         </div>
 
         <div v-else class="no-selection">
-          <div class="placeholder-icon">🗄️</div>
+          <div class="placeholder-icon">[DB]</div>
           <p>Please select a table from the left to view its contents.</p>
         </div>
 

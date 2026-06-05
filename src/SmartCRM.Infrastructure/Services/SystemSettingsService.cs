@@ -10,6 +10,8 @@ namespace SmartCRM.Infrastructure.Services;
 public sealed class SystemSettingsService : ISystemSettingsService
 {
     private readonly SmartCrmDbContext _context;
+    private static readonly Dictionary<string, (string Value, DateTime Expiry)> _cache = new();
+    private static readonly TimeSpan _cacheDuration = TimeSpan.FromMinutes(10);
 
     public SystemSettingsService(SmartCrmDbContext context)
     {
@@ -18,8 +20,16 @@ public sealed class SystemSettingsService : ISystemSettingsService
 
     public async Task<string> GetSettingAsync(string key, string defaultValue = "")
     {
+        if (_cache.TryGetValue(key, out var cached) && cached.Expiry > DateTime.UtcNow)
+        {
+            return cached.Value;
+        }
+
         var setting = await _context.SystemSettings.AsNoTracking().FirstOrDefaultAsync(x => x.Key == key);
-        return setting?.Value ?? defaultValue;
+        var value = setting?.Value ?? defaultValue;
+
+        _cache[key] = (value, DateTime.UtcNow.Add(_cacheDuration));
+        return value;
     }
 
     public async Task SaveSettingAsync(string key, string value)
@@ -36,5 +46,6 @@ public sealed class SystemSettingsService : ISystemSettingsService
         }
 
         await _context.SaveChangesAsync();
+        _cache[key] = (value, DateTime.UtcNow.Add(_cacheDuration));
     }
 }

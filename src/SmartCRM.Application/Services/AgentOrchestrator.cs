@@ -23,41 +23,72 @@ public class AgentOrchestrator
     public async Task<(string Response, List<string> Tools)> ExecuteWorkflowAsync(ChatHistory history)
     {
         _toolTracker.ExecutedTools.Clear();
-        
+        int maxTurns = 3;
+        int currentTurn = 0;
+
         var settings = new PromptExecutionSettings 
         { 
             FunctionChoiceBehavior = FunctionChoiceBehavior.Auto(),
             ExtensionData = new Dictionary<string, object> { { "temperature", 0.1 } }
         };
-        
-        Console.WriteLine("[AgentOrchestrator] Turn 1: Calling LLM to decide tools...");
-        var result = await _chatService.GetChatMessageContentAsync(history, settings, _kernel);
 
-        var toolCalls = result.Items.OfType<FunctionCallContent>().ToList();
-        if (toolCalls.Any())
+        while (currentTurn < maxTurns)
         {
-            Console.WriteLine($"[AgentOrchestrator] AI requested {toolCalls.Count} tools.");
+            currentTurn++;
+            Console.WriteLine($"[AgentOrchestrator] Turn {currentTurn}: Calling LLM...");
+            
+            ChatMessageContent result;
+            try 
+            {
+                result = await _chatService.GetChatMessageContentAsync(history, settings, _kernel);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[AgentOrchestrator] CRITICAL ERROR in Turn {currentTurn}: {ex.Message}");
+                throw;
+            }
+
+            var toolCalls = result.Items.OfType<FunctionCallContent>().ToList();
+            if (!toolCalls.Any())
+            {
+                return (result.Content ?? string.Empty, _toolTracker.ExecutedTools.Distinct().ToList());
+            }
+
+            Console.WriteLine($"[AgentOrchestrator] AI requested {toolCalls.Count} tools in turn {currentTurn}.");
             var contextualInfo = new List<string>();
+            
+            // Add Assistant message with tool calls to history
+            history.Add(result);
+
             foreach (var toolCall in toolCalls)
             {
                 try {
                     var toolResult = await toolCall.InvokeAsync(_kernel);
-                    contextualInfo.Add($"DATA from {toolCall.FunctionName}: {toolResult?.ToString()}");
+                    var resultString = toolResult?.ToString() ?? "Success (no data returned)";
+                    contextualInfo.Add($"RESULT from {toolCall.FunctionName}: {resultString}");
+                    
+                    // Add tool result back to history for SK to process
+                    history.Add(new ChatMessageContent(AuthorRole.Tool, resultString) 
+                    { 
+                        Items = { new FunctionResultContent(toolCall, toolResult) } 
+                    });
                 } catch (Exception ex) {
                     contextualInfo.Add($"ERROR in {toolCall.FunctionName}: {ex.Message}");
+                    history.Add(new ChatMessageContent(AuthorRole.Tool, $"Error: {ex.Message}") 
+                    { 
+                        Items = { new FunctionResultContent(toolCall, $"Error: {ex.Message}") } 
+                    });
                 }
             }
-
-            history.AddSystemMessage("INTERNAL RECORDS:\n" + string.Join("\n", contextualInfo) + "\n\nRemember to ONLY output valid JSON.");
             
-            Console.WriteLine("[AgentOrchestrator] Turn 2: Synthesizing final response...");
-            var finalResult = await _chatService.GetChatMessageContentAsync(history, new PromptExecutionSettings { 
-                ExtensionData = new Dictionary<string, object> { { "temperature", 0.1 } } 
-            }, _kernel);
-            
-            return (finalResult.Content ?? string.Empty, _toolTracker.ExecutedTools.Distinct().ToList());
+            Console.WriteLine($"[AgentOrchestrator] Turn {currentTurn} tools executed. Re-evaluating...");
         }
 
-        return (result.Content ?? string.Empty, _toolTracker.ExecutedTools.Distinct().ToList());
+        Console.WriteLine("[AgentOrchestrator] Reached max turns (3). Returning last response.");
+        var finalResult = await _chatService.GetChatMessageContentAsync(history, new PromptExecutionSettings { 
+            ExtensionData = new Dictionary<string, object> { { "temperature", 0.1 } } 
+        }, _kernel);
+        
+        return (finalResult.Content ?? string.Empty, _toolTracker.ExecutedTools.Distinct().ToList());
     }
 }

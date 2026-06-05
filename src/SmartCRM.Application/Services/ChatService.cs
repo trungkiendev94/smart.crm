@@ -34,9 +34,21 @@ Schema: { ""reply"": ""your_response_here"" }";
 # IDENTITY
 {instructions}
 
-# RULES
-1. Match user language (Vietnamese/English).
-2. Use emojis ✨.
+# MANDATORY LANGUAGE RULE
+- You MUST respond ONLY in Vietnamese or English.
+- NEVER use Chinese characters (Hanzi/Chu Han) under any circumstances.
+- If the user speaks Vietnamese, respond in Vietnamese.
+- If the user speaks English, respond in English.
+- DO NOT use Chinese particles like 'ne', 'ma', etc.
+
+# DATA INTEGRITY RULES
+1. NEVER assume or hallucinate customer data (emails, names, etc.).
+2. If the user mentions a name, you MUST use `SearchCustomer` to find their real email before using tools like `SendEmailMarketing`.
+3. If multiple customers are found, ask the user to clarify which one they mean.
+4. If no customer is found, inform the user and ask if they want to create a new lead.
+
+# STYLE
+1. Maintain a professional tone.
 {JsonSchemaInstruction}";
         
         history.AddSystemMessage(systemInstruction);
@@ -46,7 +58,7 @@ Schema: { ""reply"": ""your_response_here"" }";
 
     private string ParseJsonResponse(string? content)
     {
-        if (string.IsNullOrEmpty(content)) return "I have successfully processed your request! ✨";
+        if (string.IsNullOrEmpty(content)) return "Success";
 
         try 
         {
@@ -56,7 +68,7 @@ Schema: { ""reply"": ""your_response_here"" }";
                 using var doc = JsonDocument.Parse(match.Value);
                 if (doc.RootElement.TryGetProperty("reply", out var replyElement))
                 {
-                    return replyElement.GetString() ?? "I have recorded the information. 😊";
+                    return replyElement.GetString() ?? "Information recorded successfully.";
                 }
             }
         }
@@ -80,7 +92,7 @@ Schema: { ""reply"": ""your_response_here"" }";
         catch (Exception ex)
         {
             Console.WriteLine($"[ChatService] Global Error: {ex.Message}");
-            return new ChatResponse("The system is experiencing connection issues. Please try again later! 🛠️", new System.Collections.Generic.List<string>());
+            return new ChatResponse("The system is experiencing connection issues. Please try again later.", new System.Collections.Generic.List<string>());
         }
     }
 
