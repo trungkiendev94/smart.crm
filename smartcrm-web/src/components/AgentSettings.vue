@@ -14,7 +14,7 @@
           :disabled="loading"
         ></textarea>
         <p class="help-text">
-          💡 Tip: Tell the AI to use emojis, be concise, or follow specific business rules here.
+          Tip: Tell the AI to be concise or follow specific business rules here.
         </p>
       </div>
 

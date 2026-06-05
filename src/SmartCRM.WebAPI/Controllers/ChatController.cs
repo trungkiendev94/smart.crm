@@ -25,8 +25,16 @@ public class ChatController : ControllerBase
             return BadRequest("Message cannot be empty.");
         }
 
-        var response = await _aiService.GetResponseAsync(request.Message);
-        System.Console.WriteLine($"[ChatController] Response ready.");
-        return Ok(response);
+        try 
+        {
+            var response = await _aiService.GetResponseAsync(request.Message);
+            System.Console.WriteLine($"[ChatController] Response ready. Content length: {response.Reply.Length}");
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            System.Console.WriteLine($"[ChatController] FATAL ERROR: {ex.Message}");
+            return StatusCode(500, "Internal Server Error during processing.");
+        }
     }
 }

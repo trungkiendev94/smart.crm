@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
+using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel;
 using SmartCRM.Domain.Entities;
@@ -35,6 +36,25 @@ public sealed class CrmPlugin
     }
 
     [KernelFunction]
+    [Description("Searches for a customer by name and returns their details (Email, ID, etc.). Use this before sending emails or updating records if you only have a name.")]
+    public async Task<string> SearchCustomer(
+        [Description("The name or partial name of the customer to search for")] string name)
+    {
+        Console.WriteLine($"[CrmPlugin] Searching for customer: {name}");
+        var customers = await _dbContext.Customers
+            .Where(c => EF.Functions.ILike(c.FullName, $"%{name}%"))
+            .Select(c => new { c.Id, c.FullName, c.Email })
+            .ToListAsync();
+
+        if (!customers.Any())
+        {
+            return $"No customer found matching name '{name}'.";
+        }
+
+        return JsonSerializer.Serialize(customers);
+    }
+
+    [KernelFunction]
     [Description("Creates a new lead in the CRM system via async message bus.")]
     public async Task<string> CreateLead(
         [Description("The full name of the customer")] string name,
@@ -59,8 +79,23 @@ public sealed class CrmPlugin
     {
         _logger.LogInformation("Agent action: Sending {Template} email to {Email}", template, email);
         
+        // Simulating content generation or retrieval
+        string content = $"Dear customer, this is a {template} email sent to {email}. Thank you for choosing SmartCRM!";
+
         // Simulating email sending logic
         await Task.Delay(500); 
+
+        // Save to history
+        var sentEmail = new SentEmail
+        {
+            RecipientEmail = email,
+            Template = template,
+            Content = content,
+            SentAt = DateTime.UtcNow
+        };
+
+        _dbContext.SentEmails.Add(sentEmail);
+        await _dbContext.SaveChangesAsync();
 
         return $"Email sent successfully to {email} using the '{template}' template.";
     }

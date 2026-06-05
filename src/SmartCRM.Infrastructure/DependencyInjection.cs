@@ -56,11 +56,12 @@ public static class DependencyInjection
         // Standard SK registration
         services.AddKernel()
                 .AddOpenAIChatCompletion(modelId, apiKey, httpClient: httpClient)
-                .AddGoogleAIEmbeddingGeneration("gemini-embedding-001", "abc");
+                .AddOpenAITextEmbeddingGeneration("all-minilm", apiKey, httpClient: httpClient);
 
         // 2. Register internal services
         services.AddScoped<ISystemSettingsService, SystemSettingsService>();
         services.AddScoped<IEmbeddingService, SemanticKernelEmbeddingService>();
+        services.AddScoped<IRerankService, LlmRerankService>();
 
         // 3. Register Plugins and Filters
         services.AddScoped<ToolTrackingFilter>();

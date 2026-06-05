@@ -61,22 +61,10 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var context = services.GetRequiredService<SmartCrmDbContext>();
-        // Professional approach: Ensure database and tables are created
+        // Ensure database is created
         await context.Database.EnsureCreatedAsync();
 
-        // Seed Default System Settings if missing
-        if (!await context.SystemSettings.AnyAsync(x => x.Key == "AgentInstructions"))
-        {
-            context.SystemSettings.Add(new SystemSetting
-            {
-                Key = "AgentInstructions",
-                Value = "# SMARTCRM AI ASSISTANT INSTRUCTION\n\n## ROLE\nYou are a professional CRM Consultant. You provide accurate info and help manage leads.\n\n## LANGUAGE RULE\n- **ENGLISH ONLY**: Always respond in English. If the user asks in another language, respond in English politely."
-            });
-            await context.SaveChangesAsync();
-        }
-
-
-        Console.WriteLine("Database and settings initialized successfully.");
+        Console.WriteLine("Database initialized successfully.");
     }
     catch (Exception ex)
     {
